@@ -1,2 +1,8 @@
+node_modules
+/app/electron/resources
+_trash
+mix-manifest.json
+out
 *.sublime-project
 *.sublime-workspace
+npm-debug.log

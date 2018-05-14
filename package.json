@@ -1,0 +1,30 @@
+{
+  "main": "app/electron/main.js",
+  "scripts": {
+    "start": "./node_modules/.bin/electron .",
+    "watch": "cross-env NODE_ENV=development node_modules/.bin/webpack --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "dev": "cross-env NODE_ENV=development node_modules/.bin/webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "test": "./node_modules/.bin/jasmine",
+    "build-win32": "node ./tasks/build-win32.js",
+    "build-win64": "node ./tasks/build-win64.js",
+    "build-linux64": "node ./tasks/build-linux64.js",
+    "win-installer32": "node ./tasks/build-win-installer32.js",
+    "win-installer64": "node ./tasks/build-win-installer64.js",
+    "debian-installer64": "node ./tasks/build-debian-installer64.js"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.0.1",
+    "electron": "1.6.11",
+    "electron-installer-debian": "^0.5.2",
+    "electron-packager": "^9.0.1",
+    "electron-winstaller": "^2.6.3",
+    "jasmine": "^2.6.0",
+    "jsdom": "^11.2.0",
+    "laravel-mix": "^1.4.5",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1"
+  }
+}
