@@ -17,14 +17,14 @@
   },
   "devDependencies": {
     "cross-env": "^5.0.1",
-    "electron": "1.6.11",
+    "electron": "^2.0.0",
     "electron-installer-debian": "^0.5.2",
-    "electron-packager": "^9.0.1",
-    "electron-winstaller": "^2.6.3",
+    "electron-packager": "^9.1.0",
+    "electron-winstaller": "^2.6.4",
     "jasmine": "^2.6.0",
-    "jsdom": "^11.2.0",
-    "laravel-mix": "^1.4.5",
+    "jsdom": "^11.10.0",
+    "laravel-mix": "^1.7.2",
     "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1"
+    "stylus-loader": "^3.0.2"
   }
 }
