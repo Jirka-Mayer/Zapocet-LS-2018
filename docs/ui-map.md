@@ -1,0 +1,13 @@
+- FilePage
+    - list of files to open/delete
+    - create new file
+- TransactionPage
+    - Panel to create new transaction
+    - List of recent transactions with auto-load as you scroll
+    - TransactionDetailDialog for transaction editing
+- AccountPage
+    - List of accounts
+    - Create/delete/edit account
+    - Account synchronization with real world
+- SettingsPage
+    - Default account, currency
