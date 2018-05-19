@@ -1,3 +1,5 @@
+const FilePage = require("./pages/FilePage.js")
+
 class Application
 {
     constructor(window, document, elementSelector)
@@ -11,14 +13,16 @@ class Application
          * Root DOM element of the application
          */
         this.element = this.document.querySelector(elementSelector)
-    }
 
-    /**
-     * Dummy function
-     */
-    sayHello()
-    {
-        alert("hello")
+        /**
+         * Application pages
+         */
+        this.pages = {
+            file: new FilePage(this.element, this.document)
+        }
+
+        // show the initial page
+        this.pages.file.show()
     }
 }
 
