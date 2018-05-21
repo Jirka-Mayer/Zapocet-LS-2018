@@ -8,7 +8,7 @@ class FilePage extends Page
     {
         super(app, container)
 
-        this.fileBag = new FileBag()
+        this.fileBag = new FileBag(app.window.localStorage)
 
         this.refreshFileList()
 
@@ -42,7 +42,8 @@ class FilePage extends Page
             html += `
                 <li>
                     ` + this.fileBag.descriptors[i].title + `
-                    <button data-descriptor="` + i + `">Open</button>
+                    <button data-descriptor="` + i + `" data-action="open">Open</button>
+                    <button data-descriptor="` + i + `" data-action="remove">X</button>
                 </li>
             `
         }
@@ -53,9 +54,15 @@ class FilePage extends Page
     onFileListClick(e)
     {
         if (e.target.attributes["data-descriptor"] !== undefined)
-            this.openFile(this.fileBag.descriptors[
-                parseInt(e.target.attributes["data-descriptor"].value)
-            ])
+        {
+            let i = parseInt(e.target.attributes["data-descriptor"].value)
+
+            if (e.target.attributes["data-action"].value == "open")
+                this.openFile(this.fileBag.descriptors[i])
+
+            if (e.target.attributes["data-action"].value == "remove")
+                this.removeFile(this.fileBag.descriptors[i])
+        }
     }
 
     /**
@@ -75,10 +82,20 @@ class FilePage extends Page
         // DEBUG
 
         let d = this.fileBag.addDescriptor("New file", "local", "file.new-file")
+        this.fileBag.saveDescriptors()
         
         let file = new File()
         this.fileBag.saveFile(d, file.serialize())
 
+        this.refreshFileList()
+    }
+
+    /**
+     * Removes a file from the list of descriptors and deletes it
+     */
+    removeFile(descriptor)
+    {
+        this.fileBag.removeFile(descriptor)
         this.refreshFileList()
     }
 }

@@ -9,3 +9,8 @@ Mapping application structure.
 # 2018-05-19 21:26:37
 Starting development, FilePage.
 > 2018-05-19 22:44:38
+
+# 2018-05-21 09:04:06
+Initialized tests.
+Implemented local driver file saving and file bag.
+> 2018-05-21 10:25:03
