@@ -13,4 +13,7 @@ Starting development, FilePage.
 # 2018-05-21 09:04:06
 Initialized tests.
 Implemented local driver file saving and file bag.
-> 2018-05-21 10:25:03
+Transaction page creation.
+> 2018-05-21 10:33:12
+
+Next: implement File.js - SQLite, serialization, loading, test it using jasmine

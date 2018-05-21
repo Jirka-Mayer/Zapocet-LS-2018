@@ -70,8 +70,11 @@ class FilePage extends Page
      */
     openFile(descriptor)
     {
-        let file = new File()
-        file.load(this.fileBag.loadFile(descriptor))
+        this.app.file = File.deserialize(this.fileBag.loadFile(descriptor))
+
+        // swicth pages
+        this.hide()
+        this.app.pages.transaction.show()
     }
 
     /**

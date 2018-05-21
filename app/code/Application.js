@@ -1,4 +1,5 @@
 const FilePage = require("./pages/FilePage.js")
+const TransactionPage = require("./pages/TransactionPage.js")
 const File = require("./File.js")
 
 class Application
@@ -19,7 +20,8 @@ class Application
          * Application pages
          */
         this.pages = {
-            file: new FilePage(this, this.element)
+            file: new FilePage(this, this.element),
+            transaction: new TransactionPage(this, this.element)
         }
 
         // show the initial page

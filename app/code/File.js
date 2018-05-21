@@ -5,12 +5,18 @@ class File
 
     }
 
-    serialize()
+    /**
+     * Loads the file from a serialized string
+     */
+    static deserialize(fileString)
     {
 
     }
 
-    load(fileString)
+    /**
+     * Serializes the file into a string
+     */
+    serialize()
     {
 
     }

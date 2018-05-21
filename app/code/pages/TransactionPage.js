@@ -13,6 +13,14 @@ class TransactionPage extends Page
             <h1>Transaction page</h1>
         `
     }
+
+    show()
+    {
+        super.show()
+
+        // handle potencial file change
+        // ...
+    }
 }
 
 module.exports = TransactionPage
