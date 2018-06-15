@@ -87,7 +87,7 @@ class FilePage extends Page
         let d = this.fileBag.addDescriptor("New file", "local", "file.new-file")
         this.fileBag.saveDescriptors()
         
-        let file = new File()
+        let file = File.createNew()
         this.fileBag.saveFile(d, file.serialize())
 
         this.refreshFileList()

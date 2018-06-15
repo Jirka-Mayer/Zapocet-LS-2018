@@ -24,6 +24,7 @@
     "jasmine": "^2.6.0",
     "jsdom": "^11.10.0",
     "laravel-mix": "^1.7.2",
+    "moment": "^2.22.2",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2"
   }
