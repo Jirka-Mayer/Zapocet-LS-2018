@@ -1,17 +1,73 @@
 const Page = require("./Page.js")
+const Menu = require("../ui/Menu.js")
+const TransactionCreator = require("../ui/TransactionCreator.js")
+const TransactionList = require("../ui/TransactionList.js")
 
 class TransactionPage extends Page
 {
     constructor(app, container)
     {
         super(app, container)
+
+        this.menu = new Menu(this.refs.menu, "transactions")
+
+        this.transactionCreator = new TransactionCreator(
+            this.app,
+            this.refs.transactionCreator,
+            this.transactionDidCreate.bind(this)
+        )
+
+        this.transactionList = new TransactionList(
+            this.refs.transactionList,
+            this.removeTransaction.bind(this),
+            this.editTransaction.bind(this)
+        )
     }
 
     template()
     {
         return `
+            <div ref="menu"></div>
             <h1>Transaction page</h1>
+            <div ref="transactionCreator" style="border: 2px solid black; margin: 10px"></div>
+            <div ref="transactionList"></div>
         `
+    }
+
+    /**
+     * Refreshes transaction list (DOM)
+     */
+    refreshTransactionList()
+    {
+        let transactions = this.app.file.transactions
+
+        this.transactionList.refresh(transactions)
+    }
+
+    /**
+     * Called when a new transaction is created
+     */
+    transactionDidCreate(transaction)
+    {
+        this.refreshTransactionList()
+    }
+
+    /**
+     * Called when transaction detail is clicked
+     */
+    editTransaction(id)
+    {
+        // show modal ...
+        console.warn("TODO: modals")
+    }
+
+    /**
+     * Called when remove transaction is clicked
+     */
+    removeTransaction(id)
+    {
+        this.app.file.removeTransaction(id)
+        this.refreshTransactionList()
     }
 
     show()
@@ -20,6 +76,9 @@ class TransactionPage extends Page
 
         // handle potencial file change
         // ...
+
+        this.transactionCreator.refresh()
+        this.refreshTransactionList()
     }
 }
 

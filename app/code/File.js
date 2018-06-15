@@ -31,25 +31,50 @@ class File
     }
 
     /**
-     * Loads the file from a serialized string
-     */
-    static deserialize(fileString)
-    {
-        let f = new File()
-
-        let data = JSON.parse(fileString)
-
-        return f
-    }
-
-    /**
      * Serializes the file into a string
      */
     serialize()
     {
-        let data = {}
+        let head = "v1.0.0\n"
 
-        return JSON.stringify(data)
+        let data = {
+            meta: this.meta,
+            accounts: this.accounts.map(x => x.serialize()),
+            transactions: this.transactions.map(x => x.serialize())
+        }
+
+        return head + JSON.stringify(data)
+    }
+
+    /**
+     * Loads the file from a serialized string
+     */
+    static deserialize(fileString)
+    {
+        // split head and data parts
+        let m = fileString.match(/[^\n]*\n/)
+        if (m === null)
+            throw new Error("File has bad format - head not found.")
+        let head = m[0]
+        let data = fileString.slice(head.length)
+
+        // check file version
+        if (head != "v1.0.0\n")
+            throw new Error("File version is not compatible.")
+
+        // parse data
+        data = JSON.parse(data)
+
+        // load the file
+        let file = new File()
+
+        file.meta = data.meta
+        file.accounts = data.accounts.map(x => Account.deserialize(x))
+        file.transactions = data.transactions.map(
+            x => Transaction.deserialize(x, file.getAccount.bind(file))
+        )
+
+        return file
     }
 
     //////////////
@@ -97,6 +122,9 @@ class File
             return
 
         this.accounts.splice(index, 1)
+
+        if (this.meta["settings.default-account"] == id)
+            this.meta["settings.default-account"] = null
     }
 
     /**
@@ -108,6 +136,14 @@ class File
             id = id.id
 
         this.meta["settings.default-account"] = id
+    }
+
+    /**
+     * Returns the default account
+     */
+    getDefaultAccount()
+    {
+        return this.getAccount(this.meta["settings.default-account"])
     }
 
     /**

@@ -12,12 +12,12 @@ Starting development, FilePage.
 
 # 2018-05-21 09:04:06
 Initialized tests.
-Implemented local driver file saving and file bag.
+Implemented local driver filecreate saving and file bag.
 Transaction page creation.
 > 2018-05-21 10:33:12
 
 # 2018-06-13 10:32:54
-sql.js was a bad idea - the library has 2.6 MB which is way too much.
+sql.js was a bad idea - the library has 2.6 MB which is way too much, webpack crashes when trying to bundle it.
 > 2018-06-13 11:21:31
 
 # 2018-06-15 10:31:46
@@ -25,4 +25,12 @@ Account creation, serialization, removal.
 Transaction creation, serialization, removal, ordering.
 > 2018-06-15 11:46:37
 
-Next: file serialization, transaction page
+# 2018-06-15 13:25:02
+File serialization.
+> 2018-06-15 14:13:39
+
+# 2018-06-15 15:03:33
+Tarnsaction page core.
+> 2018-06-15 15:56:29
+
+Next: transaction pagination, modals, menu

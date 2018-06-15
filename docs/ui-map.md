@@ -11,3 +11,6 @@
     - Account synchronization with real world
 - SettingsPage
     - Default account, currency
+- OverviewPage
+    - Total spending, income
+    - Chart of status over time

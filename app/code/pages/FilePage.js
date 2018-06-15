@@ -83,11 +83,27 @@ class FilePage extends Page
     createFile()
     {
         // DEBUG
+        // (creates a file with dummy content)
 
         let d = this.fileBag.addDescriptor("New file", "local", "file.new-file")
         this.fileBag.saveDescriptors()
         
-        let file = File.createNew()
+        let file = new File()
+
+        // dummy content BEGIN
+
+        let cash = file.getDefaultAccount()
+        let bank = file.createAccount("Bank", 0)
+        
+        file.createTransaction("2018-06-11", cash, -106, "Doprava")
+        file.createTransaction("2018-06-12", cash, -45, "Nákup")
+        file.createTransaction("2018-06-13", cash, 5000, "Webovky")
+        file.createTransaction("2018-06-14", cash, 12, ":sync:")
+        file.createTransaction("2018-06-15", bank, 45, ":sync:")
+        file.createTransaction("2018-06-16", bank, 5, "Úroky")
+
+        // dummy content END
+
         this.fileBag.saveFile(d, file.serialize())
 
         this.refreshFileList()
