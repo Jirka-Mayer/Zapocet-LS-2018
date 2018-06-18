@@ -1,6 +1,7 @@
 const FilePage = require("./pages/FilePage.js")
 const TransactionPage = require("./pages/TransactionPage.js")
 const File = require("./File.js")
+const ModalContainer = require("./ui/ModalContainer.js")
 
 class Application
 {
@@ -31,6 +32,19 @@ class Application
          * Openned file
          */
         this.file = null
+
+        this.initializeModals()
+    }
+
+    initializeModals()
+    {
+        let div = this.document.createElement("div")
+        this.element.appendChild(div)
+
+        /**
+         * Basically a modal controller
+         */
+        this.modals = new ModalContainer(this.document, div)
     }
 }
 

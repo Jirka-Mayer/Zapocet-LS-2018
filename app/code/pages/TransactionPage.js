@@ -2,6 +2,7 @@ const Page = require("./Page.js")
 const Menu = require("../ui/Menu.js")
 const TransactionCreator = require("../ui/TransactionCreator.js")
 const TransactionList = require("../ui/TransactionList.js")
+const TransactionDetailModal = require("../ui/TransactionDetailModal.js")
 
 class TransactionPage extends Page
 {
@@ -57,8 +58,12 @@ class TransactionPage extends Page
      */
     editTransaction(id)
     {
-        // show modal ...
-        console.warn("TODO: modals")
+        this.app.modals.show(
+            new TransactionDetailModal(
+                this.app.file.getTransaction(id),
+                this.refreshTransactionList.bind(this) // submit callback
+            )
+        )
     }
 
     /**

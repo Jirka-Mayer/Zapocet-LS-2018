@@ -33,4 +33,7 @@ File serialization.
 Tarnsaction page core.
 > 2018-06-15 15:56:29
 
-Next: transaction pagination, modals, menu
+# 2018-06-18 18:43:06
+Modal engine core.
+
+Next: transaction pagination, menu
