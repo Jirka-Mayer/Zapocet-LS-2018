@@ -35,5 +35,7 @@ Tarnsaction page core.
 
 # 2018-06-18 18:43:06
 Modal engine core.
+Date, account, amount pickers.
+Transaction detail modal.
 
 Next: transaction pagination, menu

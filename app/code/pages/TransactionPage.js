@@ -6,9 +6,9 @@ const TransactionDetailModal = require("../ui/TransactionDetailModal.js")
 
 class TransactionPage extends Page
 {
-    constructor(app, container)
+    constructor(app)
     {
-        super(app, container)
+        super(app)
 
         this.menu = new Menu(this.refs.menu, "transactions")
 
@@ -23,6 +23,10 @@ class TransactionPage extends Page
             this.removeTransaction.bind(this),
             this.editTransaction.bind(this)
         )
+
+        // init
+        this.transactionCreator.refresh()
+        this.refreshTransactionList()
     }
 
     template()
@@ -61,6 +65,7 @@ class TransactionPage extends Page
         this.app.modals.show(
             new TransactionDetailModal(
                 this.app.file.getTransaction(id),
+                this.app.file,
                 this.refreshTransactionList.bind(this) // submit callback
             )
         )
@@ -72,17 +77,6 @@ class TransactionPage extends Page
     removeTransaction(id)
     {
         this.app.file.removeTransaction(id)
-        this.refreshTransactionList()
-    }
-
-    show()
-    {
-        super.show()
-
-        // handle potencial file change
-        // ...
-
-        this.transactionCreator.refresh()
         this.refreshTransactionList()
     }
 }

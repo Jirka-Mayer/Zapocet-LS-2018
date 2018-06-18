@@ -1,6 +1,4 @@
 const FilePage = require("./pages/FilePage.js")
-const TransactionPage = require("./pages/TransactionPage.js")
-const File = require("./File.js")
 const ModalContainer = require("./ui/ModalContainer.js")
 
 class Application
@@ -18,15 +16,12 @@ class Application
         this.element = this.document.querySelector(elementSelector)
 
         /**
-         * Application pages
+         * Current application page
          */
-        this.pages = {
-            file: new FilePage(this, this.element),
-            transaction: new TransactionPage(this, this.element)
-        }
+        this.page = null
 
         // show the initial page
-        this.pages.file.show()
+        this.gotoPage(FilePage)
 
         /**
          * Openned file
@@ -34,6 +29,19 @@ class Application
         this.file = null
 
         this.initializeModals()
+    }
+
+    gotoPage(PageContructor)
+    {
+        // close current page
+        if (this.page)
+        {
+            this.page.close()
+            this.page = null
+        }
+
+        // show new page
+        this.page = new PageContructor(this)
     }
 
     initializeModals()

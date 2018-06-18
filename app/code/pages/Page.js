@@ -3,25 +3,19 @@ const getRefs = require("../utils/getRefs.js")
 
 class Page
 {
-    constructor(app, container)
+    constructor(app)
     {
         this.app = app
 
         /**
          * Container DOM element
          */
-        this.container = container
+        this.container = this.app.element
 
         /**
          * Page element
          */
         this.element = this.app.document.createElement("div")
-
-        /**
-         * Is the page visible? (get only)
-         */
-        this.visible = false
-        this.element.style.display = "none"
 
         // set proper css class
         cssClass(this.element, "ui-page", true)
@@ -45,21 +39,11 @@ class Page
     }
 
     /**
-     * Shows the page
+     * Closes the page
      */
-    show()
+    close()
     {
-        this.element.style.display = "block"
-        this.visible = true
-    }
-
-    /**
-     * Hides the page
-     */
-    hide()
-    {
-        this.element.style.display = "none"
-        this.visible = false
+        this.container.removeChild(this.element)
     }
 }
 

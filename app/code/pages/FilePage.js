@@ -1,6 +1,7 @@
 const Page = require("./Page.js")
 const FileBag = require("../FileBag.js")
 const File = require("../File.js")
+const TransactionPage = require("./TransactionPage.js")
 
 class FilePage extends Page
 {
@@ -72,9 +73,7 @@ class FilePage extends Page
     {
         this.app.file = File.deserialize(this.fileBag.loadFile(descriptor))
 
-        // swicth pages
-        this.hide()
-        this.app.pages.transaction.show()
+        this.app.gotoPage(TransactionPage)
     }
 
     /**
