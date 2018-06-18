@@ -1,14 +1,30 @@
+const cssClass = require("../utils/cssClass.js")
+
 const ITEMS = [
     {
         name: "transactions",
         title: "Transactions"
+    },
+    {
+        name: "overview",
+        title: "Overview"
     }
 ]
 
+function resolvePageConstructor(name)
+{
+    return {
+        "overview": require("../pages/OverviewPage.js"),
+        "transactions": require("../pages/TransactionPage.js")
+    }[name]
+}
+
 class Menu
 {
-    constructor(element, activeItem)
+    constructor(app, element, activeItem)
     {
+        this.app = app
+
         /**
          * Menu items
          */
@@ -19,6 +35,7 @@ class Menu
          */
         this.element = element
 
+        cssClass(this.element, "menu", true)
         this.element.innerHTML = this.template()
 
         // event listeners
@@ -35,6 +52,7 @@ class Menu
         {
             itemsHtml += `
                 <a
+                    class="menu-item"
                     data-name="${this.items[i].name}"
                 >
                     ${this.items[i].title}
@@ -47,7 +65,7 @@ class Menu
                 ${itemsHtml}
             </div>
 
-            <a data-name="closeFile">Save and close file</a>
+            <a class="menu-item" data-name="closeFile">Save and close file</a>
         `
     }
 
@@ -58,13 +76,18 @@ class Menu
     {
         let name = e.target.getAttribute("data-name")
 
-        if (name = "closeFile")
+        // lazily later to avoid circular dependency
+        let page = resolvePageConstructor(name)
+
+        if (name == "closeFile")
         {
-            // handle extra
+            // handle file closing and saving and other stuff
+            // probbably via app.closeFile() or simmilar
+
             return
         }
 
-        // handle default...
+        this.app.gotoPage(page)
     }
 }
 

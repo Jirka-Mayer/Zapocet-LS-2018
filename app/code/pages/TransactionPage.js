@@ -10,7 +10,7 @@ class TransactionPage extends Page
     {
         super(app)
 
-        this.menu = new Menu(this.refs.menu, "transactions")
+        this.menu = new Menu(this.app, this.refs.menu, "transactions")
 
         this.transactionCreator = new TransactionCreator(
             this.app,
