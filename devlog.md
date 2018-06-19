@@ -40,4 +40,8 @@ Transaction detail modal.
 Working menu.
 > 2018-06-18 20:42:00
 
-Next: transaction pagination, menu
+# 2018-06-19 10:36:17
+Statistics.
+> 2018-06-19 11:34:54
+
+Next: transaction pagination, file closing
