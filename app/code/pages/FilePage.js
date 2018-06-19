@@ -18,6 +18,9 @@ class FilePage extends Page
 
         this.refs.createFileButton.addEventListener(
             "click", this.createFile.bind(this))
+
+        this.refs.createTestFileButton.addEventListener(
+            "click", this.createTestFile.bind(this))
     }
 
     template()
@@ -28,6 +31,7 @@ class FilePage extends Page
                 <!--...-->
             </ul>
             <button ref="createFileButton">Create new file</button>
+            <button ref="createTestFileButton">Create test file</button>
         `
     }
 
@@ -72,6 +76,7 @@ class FilePage extends Page
     openFile(descriptor)
     {
         this.app.file = File.deserialize(this.fileBag.loadFile(descriptor))
+        this.app.fileDescriptor = descriptor
 
         this.app.gotoPage(TransactionPage)
     }
@@ -81,29 +86,22 @@ class FilePage extends Page
      */
     createFile()
     {
-        // DEBUG
-        // (creates a file with dummy content)
-
         let d = this.fileBag.addDescriptor("New file", "local", "file.new-file")
         this.fileBag.saveDescriptors()
         
         let file = new File()
 
-        // dummy content BEGIN
-
-        let cash = file.getDefaultAccount()
-        let bank = file.createAccount("Bank", 0)
-        
-        file.createTransaction("2018-06-11", cash, -106, "Doprava")
-        file.createTransaction("2018-06-12", cash, -45, "Nákup")
-        file.createTransaction("2018-06-13", cash, 5000, "Webovky")
-        file.createTransaction("2018-06-14", cash, 12, ":sync:")
-        file.createTransaction("2018-06-15", bank, 45, ":sync:")
-        file.createTransaction("2018-06-16", bank, 5, "Úroky")
-
-        // dummy content END
-
         this.fileBag.saveFile(d, file.serialize())
+
+        this.refreshFileList()
+    }
+
+    /**
+     * Saves a file to a descriptor
+     */
+    saveFile(descriptor, file)
+    {
+        this.fileBag.saveFile(descriptor, file.serialize())
 
         this.refreshFileList()
     }
@@ -114,6 +112,32 @@ class FilePage extends Page
     removeFile(descriptor)
     {
         this.fileBag.removeFile(descriptor)
+        this.refreshFileList()
+    }
+
+    /**
+     * Creates file for testing
+     */
+    createTestFile()
+    {
+        let d = this.fileBag.addDescriptor("Test file", "local", "file.test-file")
+        this.fileBag.saveDescriptors()
+        
+        let file = new File()
+
+        // accounts
+        let cash = file.getDefaultAccount()
+        let bank = file.createAccount("Bank", 0)
+        
+        // transactions
+        file.createTransaction("2018-06-11", cash, -106, "Doprava")
+        file.createTransaction("2018-06-12", cash, -45, "Nákup")
+        file.createTransaction("2018-06-13", cash, 5000, "Webovky")
+        file.createTransaction("2018-06-14", cash, 12, ":sync:")
+        file.createTransaction("2018-06-15", bank, 45, ":sync:")
+        file.createTransaction("2018-06-16", bank, 5, "Úroky")
+
+        this.fileBag.saveFile(d, file.serialize())
         this.refreshFileList()
     }
 }

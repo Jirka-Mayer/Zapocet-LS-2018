@@ -21,7 +21,8 @@ class TransactionList
     {
         let html = ""
 
-        for (let i = 0; i < transactions.length; i++)
+        // reversed, latest transactions on top
+        for (let i = transactions.length - 1; i >= 0; i--)
         {
             let t = transactions[i]
 

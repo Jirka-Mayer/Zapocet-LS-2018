@@ -86,9 +86,7 @@ class Menu
 
         if (name == "closeFile")
         {
-            // handle file closing and saving and other stuff
-            // probbably via app.closeFile() or simmilar
-
+            this.app.saveAndCloseFile()
             return
         }
 

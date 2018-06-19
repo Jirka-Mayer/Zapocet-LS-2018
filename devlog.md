@@ -47,5 +47,5 @@ Statistics.
 # 2018-06-19 14:03:55
 Overview page.
 Account page.
-
-Next: transaction pagination, file closing
+File closing.
+> 2018-06-19 15:41:41

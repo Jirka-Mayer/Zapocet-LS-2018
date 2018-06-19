@@ -27,6 +27,7 @@ class Application
          * Openned file
          */
         this.file = null
+        this.fileDescriptor = null
 
         this.initializeModals()
     }
@@ -41,7 +42,8 @@ class Application
         }
 
         // show new page
-        this.page = new PageContructor(this)
+        if (PageContructor != null)
+            this.page = new PageContructor(this)
     }
 
     initializeModals()
@@ -53,6 +55,16 @@ class Application
          * Basically a modal controller
          */
         this.modals = new ModalContainer(this.document, div)
+    }
+
+    saveAndCloseFile()
+    {
+        this.gotoPage(FilePage)
+
+        this.page.saveFile(this.fileDescriptor, this.file)
+
+        this.file = null
+        this.fileDescriptor = null
     }
 }
 
