@@ -23,6 +23,14 @@ class AccountPicker
         this.value = this.file.getDefaultAccount()
     }
 
+    /**
+     * Registers an event handler
+     */
+    onChange(callback)
+    {
+        this.element.addEventListener("change", callback)
+    }
+
     get value()
     {
         return this.file.getAccount(this.element.value)

@@ -13,6 +13,7 @@
     "debian-installer64": "node ./tasks/build-debian-installer64.js"
   },
   "dependencies": {
+    "chart.js": "^2.7.2",
     "electron-squirrel-startup": "^1.0.0"
   },
   "devDependencies": {

@@ -8,6 +8,10 @@ const ITEMS = [
     {
         name: "overview",
         title: "Overview"
+    },
+    {
+        name: "account",
+        title: "Account"
     }
 ]
 
@@ -15,7 +19,8 @@ function resolvePageConstructor(name)
 {
     return {
         "overview": require("../pages/OverviewPage.js"),
-        "transactions": require("../pages/TransactionPage.js")
+        "transactions": require("../pages/TransactionPage.js"),
+        "account": require("../pages/AccountPage.js")
     }[name]
 }
 
