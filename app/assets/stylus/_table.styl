@@ -1,0 +1,49 @@
+.table
+    position: relative
+    width: 100%
+    
+    color: rgba(black, 80%)
+    font-size: 22px
+    font-family: "Roboto"
+    
+    border: 0
+    border-collapse: collapse
+    
+    box-shadow: 0 0 5px 0 rgba(black, 0.2)
+    background: white
+    
+    tr:nth-child(even)
+        background: #eee
+        
+    td
+        padding: 5px 10px
+        margin: 0
+        
+    .clickable-text
+        cursor: pointer
+        
+        &:hover
+            color: #29a2b5
+        
+    .icon-button
+        position: relative
+        display: block
+        top: 0
+        bottom: 0
+
+        font-size: 16px
+        font-weight: 400
+        color: rgba(black, 70%)
+        
+        border: none
+        background: none
+        
+        cursor: pointer
+        opacity: 0
+        
+        &:hover
+            color: #29a2b5
+        
+    tr:hover
+        .icon-button
+            opacity: 1

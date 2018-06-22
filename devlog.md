@@ -49,3 +49,28 @@ Overview page.
 Account page.
 File closing.
 > 2018-06-19 15:41:41
+
+# 2018-06-19 16:51:06
+Table styles.
+Icons, font.
+> 2018-06-19 17:44:09
+
+# 2018-06-22 13:21:28
+Date picker.
+
+Todo:
+- rename file
+- sync account
+- transaction list
+    - description
+    - amount color
+- amount formatting
+- date formatting
+- modals
+    - modal styles
+    - modal title
+    - confirmation modal
+    - closing by esc or background click
+
+Bugs:
+- repair transaction detail dialog openning

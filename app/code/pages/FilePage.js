@@ -26,12 +26,12 @@ class FilePage extends Page
     template()
     {
         return `
-            <h1>File page</h1>
-            <ul ref="fileList">
-                <!--...-->
-            </ul>
-            <button ref="createFileButton">Create new file</button>
-            <button ref="createTestFileButton">Create test file</button>
+            <div class="page-container">
+                <h3 class="heading">Files:</h3>
+                <table class="table" ref="fileList"></table>
+                <button ref="createFileButton">Create new file</button>
+                <button ref="createTestFileButton">Create test file</button>
+            </div>
         `
     }
 
@@ -45,11 +45,27 @@ class FilePage extends Page
         for (let i = 0; i < this.fileBag.descriptors.length; i++)
         {
             html += `
-                <li>
-                    ` + this.fileBag.descriptors[i].title + `
-                    <button data-descriptor="` + i + `" data-action="open">Open</button>
-                    <button data-descriptor="` + i + `" data-action="remove">X</button>
-                </li>
+                <tr>
+                    <td style="width: 100%">
+                        <span
+                            class="clickable-text"
+                            data-descriptor="${i}"
+                            data-action="open"
+                        >
+                            ${this.fileBag.descriptors[i].title}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="icon-button" data-descriptor="${i}" data-action="remove">
+                            <span class="icon-trash"></span>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="icon-button" data-descriptor="${i}" data-action="rename">
+                            <span class="icon-edit"></span>
+                        </button>
+                    </td>
+                </tr>
             `
         }
 

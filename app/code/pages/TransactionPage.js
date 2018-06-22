@@ -33,9 +33,13 @@ class TransactionPage extends Page
     {
         return `
             <div ref="menu"></div>
-            <h1>Transaction page</h1>
-            <div ref="transactionCreator" style="border: 2px solid black; margin: 10px"></div>
-            <div ref="transactionList"></div>
+            <div class="page-container">
+                <h3 class="heading">Create new transaction:</h3>
+                <div ref="transactionCreator" style="border: 2px solid black; margin: 10px"></div>
+                
+                <h3 class="heading">Transactions:</h3>
+                <table ref="transactionList"></table>
+            </div>
         `
     }
 

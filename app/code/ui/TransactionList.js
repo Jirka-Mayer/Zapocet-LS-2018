@@ -9,6 +9,8 @@ class TransactionList
          */
         this.element = element
 
+        cssClass(this.element, "table", true)
+
         // listeners
         this.removeTransaction = removeTransaction
         this.editTransaction = editTransaction
@@ -27,18 +29,31 @@ class TransactionList
             let t = transactions[i]
 
             html += `
-                <div>
-                    <b>${t.amount}</b>
-                    ${t.title}
-                    <button
-                        data-action="edit"
-                        data-transaction-id="${t.id}"
-                    >Edit</button>
-                    <button
-                        data-action="remove"
-                        data-transaction-id="${t.id}"
-                    >Remove</button>
-                </div>
+                <tr>
+                    <td style="white-space: nowrap">
+                        ${t.date.format("YYYY-MM-DD")}
+                    </td>
+                    <td>
+                        <b>${t.amount}</b>
+                    </td>
+                    <td style="width: 100%">
+                        ${t.title}
+                    </td>
+                    <td>
+                        <button
+                            class="icon-button"
+                            data-action="remove"
+                            data-transaction-id="${t.id}"
+                        ><span class="icon-trash"></span></button>
+                    </td>
+                    <td>
+                        <button
+                            class="icon-button"
+                            data-action="edit"
+                            data-transaction-id="${t.id}"
+                        ><span class="icon-edit"></span></button>
+                    </td>
+                </tr>
             `
         }
 

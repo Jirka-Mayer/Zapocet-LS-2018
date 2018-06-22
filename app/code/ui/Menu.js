@@ -11,7 +11,7 @@ const ITEMS = [
     },
     {
         name: "account",
-        title: "Account"
+        title: "Accounts"
     }
 ]
 
@@ -66,11 +66,10 @@ class Menu
         }
 
         return `
-            <div>
+            <nav class="menu-wrapper">
                 ${itemsHtml}
-            </div>
-
-            <a class="menu-item" data-name="closeFile">Save and close file</a>
+                <a class="menu-item" data-name="closeFile">Close file</a>
+            </nav>
         `
     }
 
