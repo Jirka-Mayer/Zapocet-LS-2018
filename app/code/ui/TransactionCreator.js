@@ -3,7 +3,8 @@ const cssClass = require("../utils/cssClass.js")
 const getRefs = require("../utils/getRefs.js")
 const AccountPicker = require("./AccountPicker.js")
 const DatePicker = require("./DatePicker.js")
-const AmountPicker = require("./AmountPicker.js")
+const AmountField = require("./AmountField.js")
+const TextField = require("./TextField.js")
 
 class TransactionCreator
 {
@@ -25,13 +26,20 @@ class TransactionCreator
         this.transactionDidCreate = transactionDidCreate
 
         // template
+        cssClass(this.element, "transaction-creator", true)
         this.element.innerHTML = `
-            <input ref="date" type="text" placeholder="Date">
-            <select ref="account"></select>
-            <input ref="amount" type="text" placeholder="Amount">
-            <input ref="title" type="text" placeholder="Title">
-            <textarea ref="description" placeholder="Description"></textarea>
-            <button ref="create">Create</button>
+            <div class="row">
+                <div ref="title"></div>
+            </div>
+            <div class="row">
+                <div ref="date"></div>
+                <div ref="account"></div>
+                <div ref="amount"></div>
+            </div>
+            <div class="row">
+                <div ref="description"></div>
+                <button ref="create" class="button">Create</button>
+            </div>
         `
 
         this.refs = getRefs(this.element)
@@ -39,10 +47,12 @@ class TransactionCreator
         // event listeners
         this.refs.create.addEventListener("click", this.onCreateClick.bind(this))
 
-        // instantiate pickers
-        this.refs.date = new DatePicker(this.refs.date)
-        this.refs.account = new AccountPicker(this.app.file, this.refs.account)
-        this.refs.amount = new AmountPicker(this.refs.amount)
+        // instantiate fields
+        this.refs.date = new DatePicker(this.refs.date, "Date:")
+        this.refs.account = new AccountPicker(this.refs.account, "Account:", this.app.file)
+        this.refs.amount = new AmountField(this.refs.amount, "Amount:")
+        this.refs.title = new TextField(this.refs.title, "Title:", false)
+        this.refs.description = new TextField(this.refs.description, "Description:", true)
     }
 
     /**
@@ -83,9 +93,9 @@ class TransactionCreator
     refresh()
     {
         this.refs.date.setNow()
-        this.refs.amount.value = ""
-        this.refs.title.value = ""
-        this.refs.description.value = ""
+        this.refs.amount.value = 0
+        this.refs.title.value = null
+        this.refs.description.value = null
 
         this.refs.account.refreshOptions()
         this.refs.account.selectDefault()

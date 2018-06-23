@@ -1,0 +1,49 @@
+.input-wrapper
+    position: relative
+    display: inline-block
+    margin: 5px
+    
+.input-label
+    display: block
+    box-sizing: border-box
+    width: 100%
+    
+    color: rgba(black, 70%)
+    font-weight: 800
+    font-size: 18px
+    font-family: "Roboto", sans-serif
+    
+.input-field
+    display: block
+    box-sizing: border-box
+    width: 100%
+    
+    font-size: 25px
+    font-family: "Roboto", sans-serif
+    
+    background: none
+    border: none
+    outline: none
+    
+    border-bottom: 2px solid gray
+    
+    resize: none
+    
+    &:hover, &:focus
+        background: rgba(black, 5%)
+        border-color: #29a2b5
+        
+    &::selection
+        background: rgba(#29a2b5, 50%)
+    
+.input-state
+    display: block
+    box-sizing: border-box
+    width: 100%
+    
+    color: rgba(black, 40%)
+    font-size: 18px
+    font-family: "Roboto", sans-serif
+    
+    &.invalid
+        color: rgba(#29a2b5, 90%)

@@ -1,9 +1,8 @@
-const moment = require("moment")
 const cssClass = require("../utils/cssClass.js")
 const getRefs = require("../utils/getRefs.js")
-const DateFormatter = require("./DateFormatter.js")
+const AmountFormatter = require("./AmountFormatter.js")
 
-class DatePicker
+class AmountField
 {
     constructor(element, label)
     {
@@ -19,7 +18,7 @@ class DatePicker
 
         this.refs = getRefs(this.element)
 
-        this.setNow()
+        this.value = 0
         this.handleFieldChange()
 
         this.refs.field.addEventListener("change", this.handleFieldChange.bind(this))
@@ -28,28 +27,28 @@ class DatePicker
 
     isValid()
     {
-        return this.value.isValid()
-    }
-
-    setNow()
-    {
-        this.value = moment()
+        return !Number.isNaN(this.value)
     }
 
     get value()
     {
         if (this.refs.field.value == "")
-            return moment()
+            return 0
 
-        return DateFormatter.parse(this.refs.field.value)
+        let val = this.refs.field.value.replace(/[^-0-9]/g, "")
+
+        return Number.parseInt(val)
     }
 
-    set value(date)
+    set value(v)
     {
-        if (typeof(date) == "object")
-            date = DateFormatter.format(date)
+        if (v == "" || v == 0)
+        {
+            this.refs.field.value = ""
+            return
+        }
 
-        this.refs.field.value = date
+        this.refs.field.value = Math.floor(v).toString()
     }
 
     handleFieldChange()
@@ -57,7 +56,11 @@ class DatePicker
         if (this.isValid())
         {
             cssClass(this.refs.state, "invalid", false)
-            this.refs.state.innerText = DateFormatter.formatFancy(this.value)
+
+            if (this.value <= 0)
+                this.refs.state.innerText = "Spent " + AmountFormatter.format(-this.value)
+            else
+                this.refs.state.innerText = "Gained " + AmountFormatter.format(this.value)
         }
         else
         {
@@ -67,4 +70,4 @@ class DatePicker
     }
 }
 
-module.exports = DatePicker
+module.exports = AmountField

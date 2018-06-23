@@ -1,5 +1,5 @@
 const Modal = require("./Modal.js")
-const AmountPicker = require("./AmountPicker.js")
+const AmountField = require("./AmountField.js")
 
 class AccountDetailModal extends Modal
 {
@@ -46,7 +46,7 @@ class AccountDetailModal extends Modal
     {
         super.modalDidMount()
 
-        this.refs.initialAmount = new AmountPicker(this.refs.initialAmount)
+        this.refs.initialAmount = new AmountField(this.refs.initialAmount)
 
         this.loadAccountValues()
 

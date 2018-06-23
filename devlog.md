@@ -57,6 +57,18 @@ Icons, font.
 
 # 2018-06-22 13:21:28
 Date picker.
+Date formatter.
+> 2018-06-22 13:58:07
+
+# 2018-06-23 21:00:38
+Text field.
+Amount field.
+> 2018-06-23 21:13:08
+
+# 2018-06-23 22:36:27
+Amount formatter.
+Account picker styles.
+> 2018-06-23 23:39:37
 
 Todo:
 - rename file
@@ -64,8 +76,6 @@ Todo:
 - transaction list
     - description
     - amount color
-- amount formatting
-- date formatting
 - modals
     - modal styles
     - modal title

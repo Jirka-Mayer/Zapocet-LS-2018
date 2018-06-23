@@ -21,6 +21,11 @@ class FilePage extends Page
 
         this.refs.createTestFileButton.addEventListener(
             "click", this.createTestFile.bind(this))
+
+        // DEBUG
+        /*setTimeout(() => {
+            this.openFile(this.fileBag.descriptors[0])
+        }, 10)*/
     }
 
     template()
@@ -29,8 +34,8 @@ class FilePage extends Page
             <div class="page-container">
                 <h3 class="heading">Files:</h3>
                 <table class="table" ref="fileList"></table>
-                <button ref="createFileButton">Create new file</button>
-                <button ref="createTestFileButton">Create test file</button>
+                <button ref="createFileButton" class="button">Create new file</button>
+                <button ref="createTestFileButton" class="button">Create test file</button>
             </div>
         `
     }
