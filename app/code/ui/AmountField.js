@@ -12,17 +12,34 @@ class AmountField
         cssClass(this.element, "input-wrapper", true)
         this.element.innerHTML = `
             <label class="input-label">${this.label}</label>
-            <input class="input-field" ref="field" type="text" size="5">
+            <form ref="form">
+                <input class="input-field" ref="field" type="text" size="5">
+            </form>
             <div class="input-state" ref="state"></div>
         `
+
+        /**
+         * Set this to tap into the submit event
+         * (from outside, set a callable)
+         */
+        this.onSubmit = null
 
         this.refs = getRefs(this.element)
 
         this.value = 0
-        this.handleFieldChange()
 
         this.refs.field.addEventListener("change", this.handleFieldChange.bind(this))
         this.refs.field.addEventListener("keyup", this.handleFieldChange.bind(this))
+
+        // submitting
+        this.refs.form.addEventListener("submit", (e) => {
+            e.preventDefault()
+            
+            if (this.onSubmit)
+                this.onSubmit()
+
+            return false
+        })
     }
 
     isValid()
@@ -49,6 +66,8 @@ class AmountField
         }
 
         this.refs.field.value = Math.floor(v).toString()
+
+        this.handleFieldChange()
     }
 
     handleFieldChange()
@@ -57,16 +76,21 @@ class AmountField
         {
             cssClass(this.refs.state, "invalid", false)
 
-            if (this.value <= 0)
-                this.refs.state.innerText = "Spent " + AmountFormatter.format(-this.value)
-            else
-                this.refs.state.innerText = "Gained " + AmountFormatter.format(this.value)
+            this.refs.state.innerText = AmountFormatter.format(this.value)
         }
         else
         {
             cssClass(this.refs.state, "invalid", true)
             this.refs.state.innerText = "Invalid input"
         }
+    }
+
+    /**
+     * Bring focus to the field
+     */
+    focus()
+    {
+        this.refs.field.focus()
     }
 }
 

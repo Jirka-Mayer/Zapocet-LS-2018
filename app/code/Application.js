@@ -44,6 +44,8 @@ class Application
         // show new page
         if (PageContructor != null)
             this.page = new PageContructor(this)
+
+        return this.page
     }
 
     initializeModals()

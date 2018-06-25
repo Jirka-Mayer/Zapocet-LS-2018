@@ -24,14 +24,22 @@ class TransactionList
      */
     refresh(transactions)
     {
-        let html = ""
+        let html = `
+            <tr>
+                <th style="white-space: nowrap">Date</th>
+                <th style="white-space: nowrap">Amount</th>
+                <th style="white-space: nowrap">Title</th>
+                <th></th>
+                <th></th>
+            </tr>
+        `
 
         // reversed, latest transactions on top
         for (let i = transactions.length - 1; i >= 0; i--)
         {
             let t = transactions[i]
 
-            let color = t.amount >= 0 ? "#bd2e2e" : "#3c733c"
+            let color = t.amount < 0 ? "#bd2e2e" : "#3c733c"
 
             let content = HtmlEntities.escape(t.title || "")
 

@@ -79,8 +79,9 @@ File page look.
 # 2018-06-25 14:43:12
 Transaction list descriptions, formats.
 Bug fixes.
+Table heads.
+Account page polish.
+Account syncing.
 
 Todo:
-- sync account
-- modals
-    - confirmation modal
+- handle empty tables (accounts, transactions, files)

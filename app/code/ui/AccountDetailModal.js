@@ -1,44 +1,24 @@
-const Modal = require("./Modal.js")
+const SubmitModal = require("./SubmitModal.js")
 const AmountField = require("./AmountField.js")
+const TextField = require("./TextField.js")
 
-class AccountDetailModal extends Modal
+class AccountDetailModal extends SubmitModal
 {
-    constructor(account, file, submitCallback, cancelCallback)
+    constructor(account, submitCallback, cancelCallback)
     {
-        super("Account detail")
+        super("Account detail", submitCallback, cancelCallback)
 
         /**
          * Transaction, that's being edited
          */
         this.account = account
-
-        /**
-         * File instance
-         */
-        this.file = file
-
-        /**
-         * Callbacks
-         */
-        this.submitCallback = submitCallback
-        this.cancelCallback = cancelCallback
     }
 
     contents()
     {
         return `
-            <label>Title</label>
-            <input ref="title" type="text">
-            <br>
-
-            <label>Initial amount</label>
-            <input ref="initialAmount" type="text">
-            <br>
-
-            <hr>
-
-            <button ref="cancel">Cancel</button>
-            <button ref="submit">Change</button>
+            <div ref="title" style="display: block; margin-bottom: 20px"></div>
+            <div ref="initialAmount" style="display: block; margin-bottom: 20px"></div>
         `
     }
 
@@ -46,12 +26,15 @@ class AccountDetailModal extends Modal
     {
         super.modalDidMount()
 
-        this.refs.initialAmount = new AmountField(this.refs.initialAmount)
+        this.refs.title = new TextField(this.refs.title, "Title:")
+        this.refs.initialAmount = new AmountField(this.refs.initialAmount, "Initial amount:")
+
+        this.refs.title.focus()
+
+        this.refs.title.onSubmit = this.submit.bind(this)
+        this.refs.initialAmount.onSubmit = this.submit.bind(this)
 
         this.loadAccountValues()
-
-        this.refs.cancel.addEventListener("click", this.close.bind(this))
-        this.refs.submit.addEventListener("click", this.submit.bind(this))
     }
 
     loadAccountValues()
@@ -81,15 +64,7 @@ class AccountDetailModal extends Modal
 
         this.storeAccountValues()
 
-        this.submitCallback()
-
-        super.close() // super, because we want to avoid cancel callback
-    }
-
-    close()
-    {
-        this.cancelCallback()
-        super.close()
+        super.submit()
     }
 }
 

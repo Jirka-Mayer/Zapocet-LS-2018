@@ -24,10 +24,10 @@ class TransactionDetailModal extends SubmitModal
     contents()
     {
         return `
+            <div ref="title" style="display: block; margin-bottom: 20px"></div>
+            <div ref="amount" style="display: block; margin-bottom: 20px"></div>
             <div ref="date" style="display: block; margin-bottom: 20px"></div>
             <div ref="account" style="display: block; margin-bottom: 20px"></div>
-            <div ref="amount" style="display: block; margin-bottom: 20px"></div>
-            <div ref="title" style="display: block; margin-bottom: 20px"></div>
             <div ref="description" style="display: block; margin-bottom: 20px"></div>
         `
     }
@@ -39,8 +39,8 @@ class TransactionDetailModal extends SubmitModal
         this.refs.date = new DatePicker(this.refs.date, "Date:")
         this.refs.account = new AccountPicker(this.refs.account, "Account:", this.file)
         this.refs.amount = new AmountField(this.refs.amount, "Amount:")
-        this.refs.title = new TextField(this.refs.title, "Amount:")
-        this.refs.description = new TextField(this.refs.description, "Amount:", true)
+        this.refs.title = new TextField(this.refs.title, "Title:")
+        this.refs.description = new TextField(this.refs.description, "Description:", true)
 
         this.loadTransactionValues()
 

@@ -1,5 +1,6 @@
 const cssClass = require("../utils/cssClass.js")
 const getRefs = require("../utils/getRefs.js")
+const HtmlEntities = require("../utils/HtmlEntities.js")
 
 class Modal
 {
@@ -81,7 +82,9 @@ class Modal
     headContents()
     {
         return `
-            <h3 class="modal-title">${this.title}</h3>
+            <h3 class="modal-title">
+                ${HtmlEntities.escape(this.title)}
+            </h3>
         `
     }
 

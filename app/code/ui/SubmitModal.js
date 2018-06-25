@@ -16,8 +16,8 @@ class SubmitModal extends Modal
     footContents()
     {
         return `
-            <button class="button" ref="cancel">Cancel</button>
             <button class="button primary" ref="submit">OK</button>
+            <button class="button" ref="cancel">Cancel</button>
         `
     }
 
