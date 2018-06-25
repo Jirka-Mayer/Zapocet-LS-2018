@@ -70,17 +70,20 @@ Amount formatter.
 Account picker styles.
 > 2018-06-23 23:39:37
 
+# 2018-06-25 12:26:44
+Rename file.
+Modal styles.
+File page look.
+> 2018-06-25 14:19:59
+
+
 Todo:
-- rename file
 - sync account
 - transaction list
     - description
     - amount color
 - modals
-    - modal styles
-    - modal title
     - confirmation modal
-    - closing by esc or background click
 
 Bugs:
 - repair transaction detail dialog openning

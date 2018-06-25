@@ -123,6 +123,23 @@ class FileBag
 
         this.saveDescriptors()
     }
+
+    /**
+     * Returns variation of the ideal ID that is unique among existing IDs
+     */
+    uniqueId(idealId)
+    {
+        // if unique already
+        if (this.descriptors.filter(x => x.id == idealId).length == 0)
+            return idealId
+
+        // add a number at the end
+        let counter = 2
+        while (this.descriptors.filter(x => x.id == idealId + "-" + counter).length > 0)
+            counter++
+
+        return idealId + "-" + counter
+    }
 }
 
 module.exports = FileBag

@@ -6,7 +6,7 @@ class TransactionDetailModal extends Modal
 {
     constructor(transaction, file, submitCallback)
     {
-        super()
+        super("Transaction detail")
 
         /**
          * Transaction, that's being edited

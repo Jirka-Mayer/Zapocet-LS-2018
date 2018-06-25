@@ -3,6 +3,14 @@ const getRefs = require("../utils/getRefs.js")
 
 class Modal
 {
+    constructor(title)
+    {
+        /**
+         * Modal title
+         */
+        this.title = title
+    }
+
     /**
      * Somewhat like a constructor, but called by the modal container
      */
@@ -21,6 +29,18 @@ class Modal
          * Callback for closing the modal
          */
         this.closeCallback = closeCallback
+
+        // escape pressing
+        this.element.addEventListener("keydown", (e) => {
+            if (e.key == "Escape")
+                this.handleEscape()
+        })
+
+        // background clicking
+        this.element.addEventListener("click", (e) => {
+            if (e.target == this.element)
+                this.handleBackgroundClick()
+        })
     }
 
     /**
@@ -28,8 +48,40 @@ class Modal
      */
     template()
     {
+        let headContents = this.headContents()
+        let head = `
+            <div class="modal-head">
+                ${headContents}
+            </div>
+            <hr class="modal-splitter">
+        `
+
+        let footContents = this.footContents()
+        let foot = `
+            <hr class="modal-splitter">
+            <div class="modal-foot">
+                ${footContents}
+            </div>
+        `
+
         return `
-            ${this.contents()}
+            <div class="modal-window">
+                ${headContents ? head : ""}
+                <div class="modal-contents">
+                    ${this.contents()}
+                </div>
+                ${footContents ? foot : ""}
+            </div>
+        `
+    }
+
+    /**
+     * Modal head contents
+     */
+    headContents()
+    {
+        return `
+            <h3 class="modal-title">${this.title}</h3>
         `
     }
 
@@ -42,6 +94,14 @@ class Modal
             <i>Empty modal</i><br>
             <b>Override me!</b>
         `
+    }
+
+    /**
+     * Modal foot contents
+     */
+    footContents()
+    {
+        return null
     }
 
     /**
@@ -58,6 +118,22 @@ class Modal
     close()
     {
         this.closeCallback()
+    }
+
+    /**
+     * Called when escape is pressed
+     */
+    handleEscape()
+    {
+        this.close()
+    }
+
+    /**
+     * Called when background is clicked
+     */
+    handleBackgroundClick()
+    {
+        this.close()
     }
 }
 

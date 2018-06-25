@@ -5,7 +5,7 @@ class AccountDetailModal extends Modal
 {
     constructor(account, file, submitCallback, cancelCallback)
     {
-        super()
+        super("Account detail")
 
         /**
          * Transaction, that's being edited
@@ -86,7 +86,7 @@ class AccountDetailModal extends Modal
         super.close() // super, because we want to avoid cancel callback
     }
 
-    close(submitted)
+    close()
     {
         this.cancelCallback()
         super.close()

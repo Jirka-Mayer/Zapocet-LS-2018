@@ -2,6 +2,8 @@ const Page = require("./Page.js")
 const FileBag = require("../FileBag.js")
 const File = require("../File.js")
 const TransactionPage = require("./TransactionPage.js")
+const PromptModal = require("../ui/PromptModal.js")
+const slug = require("../utils/slug.js")
 
 class FilePage extends Page
 {
@@ -12,9 +14,6 @@ class FilePage extends Page
         this.fileBag = new FileBag(app.window.localStorage)
 
         this.refreshFileList()
-
-        this.refs.fileList.addEventListener(
-            "click", this.onFileListClick.bind(this))
 
         this.refs.createFileButton.addEventListener(
             "click", this.createFile.bind(this))
@@ -32,10 +31,19 @@ class FilePage extends Page
     {
         return `
             <div class="page-container">
+
+                <div class="app-welcome">
+                    <h1>Zápočtový program</h1>
+                    <h2>Letní semestr 2018 - Jiří Mayer</h2>
+                </div>
+
                 <h3 class="heading">Files:</h3>
                 <table class="table" ref="fileList"></table>
-                <button ref="createFileButton" class="button">Create new file</button>
-                <button ref="createTestFileButton" class="button">Create test file</button>
+
+                <div class="file-page-actions">
+                    <button ref="createFileButton" class="button big">Create new file</button>
+                    <button ref="createTestFileButton" class="button big">Create test file</button>
+                </div>
             </div>
         `
     }
@@ -53,7 +61,7 @@ class FilePage extends Page
                 <tr>
                     <td style="width: 100%">
                         <span
-                            class="clickable-text"
+                            class="clickable-text action"
                             data-descriptor="${i}"
                             data-action="open"
                         >
@@ -61,12 +69,20 @@ class FilePage extends Page
                         </span>
                     </td>
                     <td>
-                        <button class="icon-button" data-descriptor="${i}" data-action="remove">
+                        <button
+                            class="icon-button action"
+                            data-descriptor="${i}"
+                            data-action="remove"
+                        >
                             <span class="icon-trash"></span>
                         </button>
                     </td>
                     <td>
-                        <button class="icon-button" data-descriptor="${i}" data-action="rename">
+                        <button
+                            class="icon-button action"
+                            data-descriptor="${i}"
+                            data-action="rename"
+                        >
                             <span class="icon-edit"></span>
                         </button>
                     </td>
@@ -75,19 +91,33 @@ class FilePage extends Page
         }
 
         this.refs.fileList.innerHTML = html
+
+        // register event listeners
+        this.refs.fileList.querySelectorAll(".action").forEach(
+            x => x.addEventListener("click", () => {
+                this.clickHandler(x)
+            })
+        )
     }
 
-    onFileListClick(e)
+    clickHandler(target)
     {
-        if (e.target.attributes["data-descriptor"] !== undefined)
+        let action = target.getAttribute("data-action")
+        let i = parseInt(target.getAttribute("data-descriptor"))
+
+        switch (action)
         {
-            let i = parseInt(e.target.attributes["data-descriptor"].value)
-
-            if (e.target.attributes["data-action"].value == "open")
+            case "open":
                 this.openFile(this.fileBag.descriptors[i])
+                break
 
-            if (e.target.attributes["data-action"].value == "remove")
+            case "remove":
                 this.removeFile(this.fileBag.descriptors[i])
+                break
+
+            case "rename":
+                this.renameFile(this.fileBag.descriptors[i])
+                break
         }
     }
 
@@ -103,18 +133,51 @@ class FilePage extends Page
     }
 
     /**
+     * Changes title of a descriptor via a modal
+     */
+    renameFile(descriptor)
+    {
+        this.app.modals.show(
+            new PromptModal(
+                "Change file title",
+                "File title:",
+                descriptor.title,
+                (newTitle) => {
+                    descriptor.title = newTitle
+
+                    this.fileBag.saveDescriptors()
+                    this.refreshFileList()
+                },
+                null
+            )
+        )
+    }
+
+    /**
      * Handles creation of a new file
      */
     createFile()
     {
-        let d = this.fileBag.addDescriptor("New file", "local", "file.new-file")
-        this.fileBag.saveDescriptors()
-        
-        let file = new File()
+        this.app.modals.show(
+            new PromptModal(
+                "Create new file",
+                "File title:",
+                "New file",
+                (fileTitle) => {
+                    let idealId = "file." + slug(fileTitle)
+                    let id = this.fileBag.uniqueId(idealId)
+                    let d = this.fileBag.addDescriptor(fileTitle, "local", id)
+                    this.fileBag.saveDescriptors()
+                    
+                    let file = new File()
 
-        this.fileBag.saveFile(d, file.serialize())
+                    this.fileBag.saveFile(d, file.serialize())
 
-        this.refreshFileList()
+                    this.refreshFileList()
+                },
+                null
+            )
+        )
     }
 
     /**
@@ -141,7 +204,10 @@ class FilePage extends Page
      */
     createTestFile()
     {
-        let d = this.fileBag.addDescriptor("Test file", "local", "file.test-file")
+        let fileTitle = "Test file"
+        let idealId = "file." + slug(fileTitle)
+        let id = this.fileBag.uniqueId(idealId)
+        let d = this.fileBag.addDescriptor(fileTitle, "local", id)
         this.fileBag.saveDescriptors()
         
         let file = new File()

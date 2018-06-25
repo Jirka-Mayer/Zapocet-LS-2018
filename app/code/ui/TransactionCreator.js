@@ -38,7 +38,7 @@ class TransactionCreator
             </div>
             <div class="row">
                 <div ref="description"></div>
-                <button ref="create" class="button">Create</button>
+                <button ref="create" class="button big">Create</button>
             </div>
         `
 
