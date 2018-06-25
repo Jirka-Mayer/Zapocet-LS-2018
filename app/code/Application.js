@@ -83,4 +83,8 @@ class Application
     }
 }
 
+// bind to window if run from browser
+if (window !== undefined)
+    window.Application = Application
+
 module.exports = Application
