@@ -42,10 +42,13 @@ class TransactionDetailModal extends SubmitModal
         this.refs.title = new TextField(this.refs.title, "Title:")
         this.refs.description = new TextField(this.refs.description, "Description:", true)
 
-        this.loadTransactionValues()
+        this.refs.title.focus()
 
-        this.refs.cancel.addEventListener("click", this.close.bind(this))
-        this.refs.submit.addEventListener("click", this.submit.bind(this))
+        this.refs.title.onSubmit = this.submit.bind(this)
+        this.refs.description.onSubmit = this.submit.bind(this)
+        this.refs.amount.onSubmit = this.submit.bind(this)
+
+        this.loadTransactionValues()
     }
 
     loadTransactionValues()
@@ -68,7 +71,9 @@ class TransactionDetailModal extends SubmitModal
 
     validate()
     {
-        return this.refs.date.isValid() && this.refs.amount.isValid()
+        return this.refs.date.isValid()
+            && this.refs.amount.isValid()
+            && this.refs.account.isValid()
     }
 
     submit()

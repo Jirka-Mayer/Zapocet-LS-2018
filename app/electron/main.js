@@ -12,7 +12,7 @@ let win
 function createWindow()
 {
     win = new BrowserWindow({
-        width: 800,
+        width: 800, // or 1200x600
         height: 600,
 
         /*

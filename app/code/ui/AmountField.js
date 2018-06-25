@@ -27,6 +27,7 @@ class AmountField
         this.refs = getRefs(this.element)
 
         this.value = 0
+        this.handleFieldChange()
 
         this.refs.field.addEventListener("change", this.handleFieldChange.bind(this))
         this.refs.field.addEventListener("keyup", this.handleFieldChange.bind(this))

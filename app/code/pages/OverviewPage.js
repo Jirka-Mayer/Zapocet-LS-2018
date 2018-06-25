@@ -2,6 +2,8 @@ const Page = require("./Page.js")
 const Menu = require("../ui/Menu.js")
 const Statistics = require("../Statistics.js")
 const Chart = require("chart.js")
+const HtmlEntities = require("../utils/HtmlEntities.js")
+const AmountFormatter = require("../ui/AmountFormatter.js")
 
 class OverviewPage extends Page
 {
@@ -21,14 +23,14 @@ class OverviewPage extends Page
     {
         return `
             <div ref="menu"></div>
-            <h1>Overview page</h1>
+            <div class="page-container overview-page">
+                <h3 class="heading">Current state:</h3>
+                <table ref="currentState" class="table current-state"></table>
 
-            <h2>Current state</h2>
-            <table ref="currentState"></table>
-
-            <h2>State over time</h2>
-            <div style="position: relative; width: 100%">
-                <canvas ref="daily" width="400" height="200"></canvas>
+                <h3 class="heading">State over time:</h3>
+                <div class="over-time">
+                    <canvas ref="daily" width="400" height="200"></canvas>
+                </div>
             </div>
         `
     }
@@ -43,8 +45,8 @@ class OverviewPage extends Page
 
             accountsHtml += `
                 <tr>
-                    <td>${account.title}</td>
-                    <td>${this.stats.currentStates[account.id]}</td>
+                    <td>${HtmlEntities.escape(account.title)}</td>
+                    <td>${AmountFormatter.format(this.stats.currentStates[account.id])}</td>
                 </tr>
             `
         }
@@ -56,14 +58,21 @@ class OverviewPage extends Page
             </tr>
             ${accountsHtml}
             <tr>
-                <td><b>Total</b></td>
-                <td><b>${this.stats.currentTotalState}</b></td>
+                <th>Total</th>
+                <th>${AmountFormatter.format(this.stats.currentTotalState)}</th>
             </tr>
         `
     }
 
     setupDailyState()
     {
+        const colors = [
+            { background: "rgba(41, 162, 181, 0.5)", border: "rgba(31, 138, 154, 0.8)" }, // cyan
+            { background: "rgba(255, 99, 71, 0.5)", border: "rgba(212, 77, 53, 0.8)" }, // red
+            { background: "rgba(12, 148, 10, 0.5)", border: "rgba(11, 107, 9, 0.8)" }, // green
+            { background: "rgba(210, 185, 8, 0.5)", border: "rgba(169, 149, 9, 0.8)" }, // yellow
+        ]
+
         let datasets = []
         
         for (let i = 0; i < this.app.file.accounts.length; i++)
@@ -72,6 +81,8 @@ class OverviewPage extends Page
 
             datasets.push({
                 label: account.title,
+                backgroundColor: colors[i % colors.length].background,
+                borderColor: colors[i % colors.length].border,
                 data: this.stats.daily.map(x => { return {
                     t: x.date.toDate(),
                     y: x.states[account.id]
@@ -79,26 +90,36 @@ class OverviewPage extends Page
             })
         }
 
+        // prevent area-fill overlapping
+        if (datasets.length > 0)
+            datasets[0].fill = "origin"
+
         this.dailyChart = new Chart(this.refs.daily.getContext("2d"), {
             type: "line",
             data: {
                 datasets: datasets
             },
             options: {
+                tooltips: {
+                    callbacks: {
+                        label: x => datasets[x.datasetIndex].label + ": " + AmountFormatter.format(x.yLabel)
+                    }
+                },
                 scales: {
                     xAxes: [{
-                        type: "time",
-                        time: {
-                            unit: "day"
-                        }
+                        type: "time"
                     }],
                     yAxes: [{
-                        stacked: true
+                        stacked: true,
+                        ticks: {
+                            callback: x => AmountFormatter.format(x)
+                        }
                     }]
                 },
                 elements: {
                     line: {
-                        tension: 0
+                        tension: 0,
+                        fill: "-1" // prevent area-fill overlapping
                     }
                 }
             }

@@ -143,6 +143,9 @@ class File
      */
     getDefaultAccount()
     {
+        if (this.meta["settings.default-account"] == null)
+            return null
+
         return this.getAccount(this.meta["settings.default-account"])
     }
 

@@ -30,6 +30,9 @@ class Application
         this.fileDescriptor = null
 
         this.initializeModals()
+
+        // listen for window closing
+        this.window.addEventListener("beforeunload", this.beforeUnload.bind(this))
     }
 
     gotoPage(PageContructor)
@@ -67,6 +70,16 @@ class Application
 
         this.file = null
         this.fileDescriptor = null
+    }
+
+    /**
+     * Called before the page is closed
+     */
+    beforeUnload()
+    {
+        // save file if openned
+        if (this.file != null)
+            this.saveAndCloseFile()
     }
 }
 

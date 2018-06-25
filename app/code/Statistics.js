@@ -32,6 +32,20 @@ class Statistics
         /**
          * Total spendings / income
          */
+        this.totalSpendings = 0
+        this.totalIncome = 0
+
+        this.computeTotals()
+    }
+
+    /**
+     * Computes total spendings and income
+     */
+    computeTotals()
+    {
+        if (this.file.transactions.length == 0)
+            return
+
         this.totalSpendings = this.file.transactions
             .map(x => Math.min(x.amount, 0))
             .reduce((acc, x) => acc + x)

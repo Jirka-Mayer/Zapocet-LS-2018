@@ -82,6 +82,9 @@ Bug fixes.
 Table heads.
 Account page polish.
 Account syncing.
-
-Todo:
-- handle empty tables (accounts, transactions, files)
+Overview page styles.
+Test file.
+Overview chart styles.
+Empty table handling.
+Saving file on window unload.
+> 2018-06-25 18:26:56

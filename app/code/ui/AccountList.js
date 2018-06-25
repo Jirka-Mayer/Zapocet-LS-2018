@@ -30,6 +30,13 @@ class AccountList
             </tr>
         `
 
+        if (this.file.accounts.length == 0)
+            html = `
+                <tr>
+                    <th style="text-align: center">No accounts</th>
+                </tr>
+            `
+
         for (let i = 0; i < this.file.accounts.length; i++)
         {
             let account = this.file.accounts[i]

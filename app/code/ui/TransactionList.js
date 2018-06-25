@@ -34,6 +34,13 @@ class TransactionList
             </tr>
         `
 
+        if (transactions.length == 0)
+            html = `
+                <tr>
+                    <th style="text-align: center">No transactions</th>
+                </tr>
+            `
+
         // reversed, latest transactions on top
         for (let i = transactions.length - 1; i >= 0; i--)
         {

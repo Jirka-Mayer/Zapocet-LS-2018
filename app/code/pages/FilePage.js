@@ -21,11 +21,6 @@ class FilePage extends Page
 
         this.refs.createTestFileButton.addEventListener(
             "click", this.createTestFile.bind(this))
-
-        // DEBUG
-        setTimeout(() => {
-            this.openFile(this.fileBag.descriptors[0])
-        }, 10)
     }
 
     template()
@@ -55,6 +50,13 @@ class FilePage extends Page
     refreshFileList()
     {
         let html = ""
+
+        if (this.fileBag.descriptors.length == 0)
+            html = `
+                <tr>
+                    <th style="text-align: center">No files</th>
+                </tr>
+            `
 
         for (let i = 0; i < this.fileBag.descriptors.length; i++)
         {
@@ -216,14 +218,35 @@ class FilePage extends Page
         // accounts
         let cash = file.getDefaultAccount()
         let bank = file.createAccount("Bank", 0)
+
+        cash.initialAmount = 21200
+        bank.initialAmount = 10563
+
+        /*
+            Transakce jsou vybrané záznamy z reálných dat.
+         */
         
         // transactions
-        file.createTransaction("2018-06-11", cash, -106, "Doprava")
-        file.createTransaction("2018-06-12", cash, -45, "Nákup")
-        file.createTransaction("2018-06-13", cash, 5000, "Webovky")
-        file.createTransaction("2018-06-14", cash, 12, ":sync:")
-        file.createTransaction("2018-06-15", bank, 45, ":sync:")
-        file.createTransaction("2018-06-16", bank, 5, "Úroky")
+        file.createTransaction("2015-10-07", cash, -8, "Kantýna", "1 Rohlík")
+        file.createTransaction("2015-10-12", cash, -30, "Vlak")
+        file.createTransaction("2015-10-24", cash, -62, ":sync:")
+        file.createTransaction("2015-11-04", bank, -750, "Poplatek za zkoušky z autoškoly")
+        file.createTransaction("2015-11-26", cash, -171, "DOD Matfyz vlak")
+        file.createTransaction("2015-12-04", cash, -160, "Maturitní ples")
+        file.createTransaction("2015-12-18", cash, -54, "Vlak do Pardubic")
+        file.createTransaction("2016-02-05", cash, -69, "Baterky AAA")
+        file.createTransaction("2016-03-14", cash, -11, "Autobus")
+        file.createTransaction("2016-03-15", cash, -100, "Divadlo")
+        file.createTransaction("2017-01-15", bank, -590, "Přihláška na MFF")
+        file.createTransaction("2017-01-16", cash, -20, "Doprava")
+        file.createTransaction("2017-01-17", cash, -52, "Doprava na krajské kolo MO-P")
+        file.createTransaction("2017-02-16", cash, -88, "Oběd na Fyziklání")
+        file.createTransaction("2017-03-01", cash, -21, "Doprava")
+        file.createTransaction("2017-03-01", cash, -20, "Kantýna")
+        file.createTransaction("2017-03-01", cash, 48, "Proplacení jízdenek na Fyziklání", "Od školy")
+        file.createTransaction("2017-03-02", cash, -20, "Doprava")
+        file.createTransaction("2017-03-03", cash, -20, "Doprava")
+        file.createTransaction("2017-05-10", cash, 400, "Doučování", "Fyzika")
 
         this.fileBag.saveFile(d, file.serialize())
         this.refreshFileList()

@@ -79,7 +79,7 @@ class AccountPage extends Page
         this.app.file.removeAccount(id)
 
         this.app.file.transactions = this.app.file.transactions.filter(
-            x => x.id != id
+            x => x.account.id != id
         )
         
         this.accountList.refresh()

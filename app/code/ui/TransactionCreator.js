@@ -57,6 +57,7 @@ class TransactionCreator
         this.refs.title.focus()
 
         this.refs.title.onSubmit = this.onCreateClick.bind(this)
+        this.refs.amount.onSubmit = this.onCreateClick.bind(this)
         this.refs.description.onSubmit = this.onCreateClick.bind(this)
     }
 
@@ -89,7 +90,9 @@ class TransactionCreator
      */
     validateInput()
     {
-        return this.refs.date.isValid() && this.refs.amount.isValid()
+        return this.refs.date.isValid()
+            && this.refs.amount.isValid()
+            && this.refs.account.isValid()
     }
 
     /**

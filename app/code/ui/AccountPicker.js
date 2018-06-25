@@ -49,10 +49,18 @@ class AccountPicker
 
     set value(id)
     {
+        if (id == null)
+            return
+
         if (typeof(id) == "object")
             id = id.id
 
         this.refs.field.value = id
+    }
+
+    isValid()
+    {
+        return this.value != null
     }
 }
 
