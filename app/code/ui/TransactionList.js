@@ -1,4 +1,7 @@
 const cssClass = require("../utils/cssClass.js")
+const DateFormatter = require("./DateFormatter.js")
+const AmountFormatter = require("./AmountFormatter.js")
+const HtmlEntities = require("../utils/HtmlEntities.js")
 
 class TransactionList
 {
@@ -28,16 +31,31 @@ class TransactionList
         {
             let t = transactions[i]
 
+            let color = t.amount >= 0 ? "#bd2e2e" : "#3c733c"
+
+            let content = HtmlEntities.escape(t.title || "")
+
+            if (t.isSynchronizing())
+                content = `<b>Sync</b>`
+
+            if (t.description)
+                content += `
+                    <br>
+                    <i style="font-size: 80%;">
+                        ${HtmlEntities.escape(t.description)}
+                    </i>
+                `
+
             html += `
                 <tr>
                     <td style="white-space: nowrap">
-                        ${t.date.format("YYYY-MM-DD")}
+                        ${DateFormatter.format(t.date)}
                     </td>
-                    <td>
-                        <b>${t.amount}</b>
+                    <td style="white-space: nowrap; color: ${color};">
+                        <b>${AmountFormatter.format(Math.abs(t.amount))}</b>
                     </td>
                     <td style="width: 100%">
-                        ${t.title}
+                        ${content}
                     </td>
                     <td>
                         <button
@@ -61,17 +79,19 @@ class TransactionList
 
         // register event listeners
         this.element.querySelectorAll("button").forEach(
-            x => x.addEventListener("click", this.clickHandler.bind(this))
+            x => x.addEventListener("click", () => {
+                this.clickHandler(x)
+            })
         )
     }
 
     /**
      * Handles clicks on action buttons
      */
-    clickHandler(e)
+    clickHandler(target)
     {
-        let action = e.target.getAttribute("data-action")
-        let id = e.target.getAttribute("data-transaction-id")
+        let action = target.getAttribute("data-action")
+        let id = target.getAttribute("data-transaction-id")
 
         switch (action)
         {

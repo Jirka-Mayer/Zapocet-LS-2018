@@ -53,6 +53,11 @@ class TransactionCreator
         this.refs.amount = new AmountField(this.refs.amount, "Amount:")
         this.refs.title = new TextField(this.refs.title, "Title:", false)
         this.refs.description = new TextField(this.refs.description, "Description:", true)
+
+        this.refs.title.focus()
+
+        this.refs.title.onSubmit = this.onCreateClick.bind(this)
+        this.refs.description.onSubmit = this.onCreateClick.bind(this)
     }
 
     /**

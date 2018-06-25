@@ -4,6 +4,7 @@ const File = require("../File.js")
 const TransactionPage = require("./TransactionPage.js")
 const PromptModal = require("../ui/PromptModal.js")
 const slug = require("../utils/slug.js")
+const HtmlEntities = require("../utils/HtmlEntities.js")
 
 class FilePage extends Page
 {
@@ -22,9 +23,9 @@ class FilePage extends Page
             "click", this.createTestFile.bind(this))
 
         // DEBUG
-        /*setTimeout(() => {
+        setTimeout(() => {
             this.openFile(this.fileBag.descriptors[0])
-        }, 10)*/
+        }, 10)
     }
 
     template()
@@ -65,7 +66,7 @@ class FilePage extends Page
                             data-descriptor="${i}"
                             data-action="open"
                         >
-                            ${this.fileBag.descriptors[i].title}
+                            ${HtmlEntities.escape(this.fileBag.descriptors[i].title)}
                         </span>
                     </td>
                     <td>

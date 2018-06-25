@@ -76,14 +76,11 @@ Modal styles.
 File page look.
 > 2018-06-25 14:19:59
 
+# 2018-06-25 14:43:12
+Transaction list descriptions, formats.
+Bug fixes.
 
 Todo:
 - sync account
-- transaction list
-    - description
-    - amount color
 - modals
     - confirmation modal
-
-Bugs:
-- repair transaction detail dialog openning

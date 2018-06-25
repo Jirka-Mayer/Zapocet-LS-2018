@@ -15,6 +15,9 @@ class AmountFormatter
                 + amount.substring(splitPoint, amount.length)
         }
 
+        if (amount[amount.length - 1] == " ")
+            amount = amount.substring(0, amount.length - 1)
+
         return amount + ",-"
     }
 }

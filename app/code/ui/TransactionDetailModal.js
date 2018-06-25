@@ -1,12 +1,14 @@
-const Modal = require("./Modal.js")
+const SubmitModal = require("./SubmitModal.js")
 const AccountPicker = require("./AccountPicker.js")
 const DatePicker = require("./DatePicker.js")
+const AmountField = require("./AmountField.js")
+const TextField = require("./TextField.js")
 
-class TransactionDetailModal extends Modal
+class TransactionDetailModal extends SubmitModal
 {
     constructor(transaction, file, submitCallback)
     {
-        super("Transaction detail")
+        super("Transaction detail", submitCallback, null)
 
         /**
          * Transaction, that's being edited
@@ -17,40 +19,16 @@ class TransactionDetailModal extends Modal
          * File instance
          */
         this.file = file
-
-        /**
-         * Function to call on modal submit
-         */
-        this.submitCallback = submitCallback
     }
 
     contents()
     {
         return `
-            <label>Date</label>
-            <input ref="date" type="text">
-            <br>
-
-            <label>Account</label>
-            <select ref="account"></select>
-            <br>
-
-            <label>Amount</label>
-            <input ref="amount" type="text">
-            <br>
-
-            <label>Title</label>
-            <input ref="title" type="text">
-            <br>
-
-            <label>Description</label>
-            <textarea ref="description"></textarea>
-            <br>
-
-            <hr>
-
-            <button ref="cancel">Cancel</button>
-            <button ref="submit">Change</button>
+            <div ref="date" style="display: block; margin-bottom: 20px"></div>
+            <div ref="account" style="display: block; margin-bottom: 20px"></div>
+            <div ref="amount" style="display: block; margin-bottom: 20px"></div>
+            <div ref="title" style="display: block; margin-bottom: 20px"></div>
+            <div ref="description" style="display: block; margin-bottom: 20px"></div>
         `
     }
 
@@ -58,8 +36,11 @@ class TransactionDetailModal extends Modal
     {
         super.modalDidMount()
 
-        this.refs.date = new DatePicker(this.refs.date)
-        this.refs.account = new AccountPicker(this.file, this.refs.account)
+        this.refs.date = new DatePicker(this.refs.date, "Date:")
+        this.refs.account = new AccountPicker(this.refs.account, "Account:", this.file)
+        this.refs.amount = new AmountField(this.refs.amount, "Amount:")
+        this.refs.title = new TextField(this.refs.title, "Amount:")
+        this.refs.description = new TextField(this.refs.description, "Amount:", true)
 
         this.loadTransactionValues()
 
@@ -100,9 +81,7 @@ class TransactionDetailModal extends Modal
 
         this.storeTransactionValues()
 
-        this.submitCallback()
-
-        this.close()
+        super.submit()
     }
 }
 

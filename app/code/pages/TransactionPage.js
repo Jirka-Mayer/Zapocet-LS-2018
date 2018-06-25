@@ -38,7 +38,7 @@ class TransactionPage extends Page
                 <div ref="transactionCreator"></div>
                 
                 <h3 class="heading">Transactions:</h3>
-                <table ref="transactionList"></table>
+                <table ref="transactionList" class="transaction-list"></table>
             </div>
         `
     }
