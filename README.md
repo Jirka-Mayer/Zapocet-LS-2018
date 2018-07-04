@@ -50,6 +50,15 @@ Jádro aplikace je testované pomocí unit testů uvnitř `/spec`. Uživatelské
 
 ## Dokumentace kódu
 
-- [Architektura jádra aplikace](docs/app-core.md)
+- [Aplikace](docs/application.md)
 - [Soubory](docs/files.md)
+- [Stránky](docs/pages.md)
 - [Dialogová okna](docs/modals.md)
+
+
+## Co nebylo doděláno
+
+- **Stránkování transakcí** - Pokud by transakcí bylo hodně, není reálné vypisovat všechny. Takže buď přidat stránkování, nebo dynamické načítání.
+- **Google drive** - Další drivery pro ukládání souborů.
+- **Chytřejší statistiky** - Teď se statistiky napočítají při otevření stránky. Opět pro větší počet transakcí to není reálné. Jenže za 4 roky co si vedu transakce v excelu jsem ještě nepřekročil 1000 transakcí, takže to není urgentní vlastnost.
+- **Měna** - Přidělit účtu měnu a formátovat transakce podle ní.
