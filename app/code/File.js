@@ -239,6 +239,20 @@ class File
 
         return this.transactions.find(x => x.id == id) || null
     }
+
+    /**
+     * Zařadí transakci na správné místo poté co bylo upraveno její datum
+     */
+    repairTransactionOrder(id)
+    {
+        let transaction = this.getTransaction(id)
+
+        if (transaction == null)
+            throw new Error("Given transaction is not in this file.")
+
+        this.removeTransaction(transaction)
+        this.insertTransaction(transaction)
+    }
 }
 
 module.exports = File

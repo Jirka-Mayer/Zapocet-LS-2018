@@ -70,7 +70,10 @@ class TransactionPage extends Page
             new TransactionDetailModal(
                 this.app.file.getTransaction(id),
                 this.app.file,
-                this.refreshTransactionList.bind(this) // submit callback
+                () => { // submit callback
+                    this.app.file.repairTransactionOrder(id)
+                    this.refreshTransactionList()
+                }
             )
         )
     }
